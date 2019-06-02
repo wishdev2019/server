@@ -1,0 +1,1 @@
+from django.urls import path,includefrom .user import urls as user_urlsfrom .public import urls as public_urlsurlpatterns = [    path('user/', include(user_urls)),    path('public/', include(public_urls))]
