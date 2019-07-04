@@ -9,9 +9,6 @@ class GenericViewSetCustom(viewsets.ViewSet):
 
     pass
 
-
-
-
 def get_ip_info(ip):
 
     r = requests.get('http://ip.taobao.com/service/getIpInfo.php?ip=%s' % ip)
@@ -22,6 +19,6 @@ def get_ip_info(ip):
         region = i['region']  # 地区
         city = i['city']  # 城市
         isp = i['isp']  # 运营商
-        return  u'国家: %s省份: %s城市: %s' % (country,  region, city)
+        return  u'%s%s%s' % (country,  region, city)
     else:
         raise PubErrorCustom("IP不正确!")

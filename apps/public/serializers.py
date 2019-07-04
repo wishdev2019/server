@@ -45,5 +45,5 @@ class ManageSerializer(serializers.Serializer):
     def get_ipname(self,obj):
         login = Login.objects.filter(userid=obj.userid).order_by("createtime")
         ip = login[0].ip if login.exists() else ""
-
+        print("ip:{}".format(ip))
         return get_ip_info(ip)
