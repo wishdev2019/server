@@ -33,6 +33,7 @@ class Users(models.Model):
 
     userid=models.BigAutoField(primary_key=True)
     name=models.CharField(max_length=120,verbose_name="名称",default='',null=True)
+    rolecode = models.CharField(max_length=4,verbose_name="角色 1000-管理员,2001-玩家",default='2001')
     loginname=models.CharField(max_length=60,verbose_name="登录名称",default='',null=True)
     passwd=models.CharField(max_length=60,verbose_name='密码',default='')
     pay_passwd=models.CharField(max_length=60,verbose_name='支付密码',default='')
@@ -63,6 +64,8 @@ class Users(models.Model):
             self.passwd = md5pass('123456')
         if not self.pay_passwd:
             self.pay_passwd = md5pass('123456')
+        if not self.loginname:
+            self.loginname = self.name
         return super(Users, self).save(*args, **kwargs)
 
     class Meta:

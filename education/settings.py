@@ -35,7 +35,7 @@ ALLOWED_HOSTS = ['*']
 APPEND_SLASH = False
 
 CORS_ORIGIN_ALLOW_ALL = True
-CORS_EXPOSE_HEADERS = ['X-Content-Range', 'X-Content-Total']
+CORS_EXPOSE_HEADERS = ['X-Total']
 
 # ==============================================================================
 # APP 运行环境配置信息
@@ -80,6 +80,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 MIDDLEWARE += MIDDLEWARE_CLASSES_CUSTOM
 
@@ -245,3 +246,29 @@ LOGGING = {
     }
 }
 
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_WHITELIST = ()
+
+CORS_ALLOW_METHODS = (
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+    'VIEW',
+)
+
+CORS_ALLOW_HEADERS = (
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'tot',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+)
