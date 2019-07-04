@@ -78,6 +78,7 @@ class Login(models.Model):
     id=models.BigAutoField(primary_key=True)
     userid=models.BigIntegerField(default=0)
     createtime=models.BigIntegerField(default=0)
+    ip = models.CharField(verbose_name="IP",max_length=60)
 
     def save(self, *args, **kwargs):
         t=time.mktime(timezone.now().timetuple())

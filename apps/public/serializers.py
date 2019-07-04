@@ -3,6 +3,7 @@ from apps.public.models import Memu
 from apps.user.models import Users,Login
 from django.utils import timezone
 from rest_framework.validators import UniqueTogetherValidator
+from apps.utils import get_ip_info
 
 from libs.utils.mytime import timestamp_toTime,UtilTime
 
@@ -26,16 +27,23 @@ class MenuModelSerializer(serializers.ModelSerializer):
 
 class ManageSerializer(serializers.Serializer):
 
-	userid = serializers.IntegerField()
-	loginname = serializers.CharField()
-	name  = serializers.CharField()
+    userid = serializers.IntegerField()
+    loginname = serializers.CharField()
+    name  = serializers.CharField()
+    ipname = serializers.CharField()
 
-	logintime = serializers.SerializerMethodField()
-	logincount = serializers.SerializerMethodField()
+    logintime = serializers.SerializerMethodField()
+    logincount = serializers.SerializerMethodField()
 
-	def get_logintime(self,obj):
-		login=Login.objects.filter(userid=obj.userid).order_by("createtime")
-		return timestamp_toTime(login[0].createtime) if login.exists() else ""
+    def get_logintime(self,obj):
+        login=Login.objects.filter(userid=obj.userid).order_by("createtime")
+        return timestamp_toTime(login[0].createtime) if login.exists() else ""
 
-	def get_logincount(self,obj):
-		return Login.objects.filter(userid=obj.userid).count()
+    def get_logincount(self,obj):
+        return Login.objects.filter(userid=obj.userid).count()
+
+    def get_ipname(self,obj):
+        login = Login.objects.filter(userid=obj.userid).order_by("createtime")
+        ip = login[0].ip if login.exists() else ""
+
+        return get_ip_info(ip)
