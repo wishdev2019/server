@@ -35,6 +35,8 @@ class ManageSerializer(serializers.Serializer):
     logintime = serializers.SerializerMethodField()
     logincount = serializers.SerializerMethodField()
 
+    bal = serializers.DecimalField(max_digits=18,decimal_places=2)
+
     def get_logintime(self,obj):
         login=Login.objects.filter(userid=obj.userid).order_by("-createtime")
         return timestamp_toTime(login[0].createtime) if login.exists() else ""
