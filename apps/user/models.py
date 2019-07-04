@@ -55,6 +55,10 @@ class Users(models.Model):
 
     google_token = models.CharField(max_length=60,verbose_name="google_token",default="")
 
+
+    ipname = None
+    ip = None
+
     def save(self, *args, **kwargs):
         t=time.mktime(timezone.now().timetuple())
 
@@ -79,6 +83,9 @@ class Login(models.Model):
     userid=models.BigIntegerField(default=0)
     createtime=models.BigIntegerField(default=0)
     ip = models.CharField(verbose_name="IP",max_length=60)
+
+
+    ipname = None
 
     def save(self, *args, **kwargs):
         t=time.mktime(timezone.now().timetuple())
