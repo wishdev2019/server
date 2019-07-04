@@ -30,20 +30,20 @@ class ManageSerializer(serializers.Serializer):
     userid = serializers.IntegerField()
     loginname = serializers.CharField()
     name  = serializers.CharField()
-    ipname = serializers.CharField()
+    ipname = serializers.SerializerMethodField()
 
     logintime = serializers.SerializerMethodField()
     logincount = serializers.SerializerMethodField()
 
     def get_logintime(self,obj):
-        login=Login.objects.filter(userid=obj.userid).order_by("createtime")
+        login=Login.objects.filter(userid=obj.userid).order_by("-createtime")
         return timestamp_toTime(login[0].createtime) if login.exists() else ""
 
     def get_logincount(self,obj):
         return Login.objects.filter(userid=obj.userid).count()
 
     def get_ipname(self,obj):
-        login = Login.objects.filter(userid=obj.userid).order_by("createtime")
+        login = Login.objects.filter(userid=obj.userid).order_by("-createtime")
         ip = login[0].ip if login.exists() else ""
-        print("ip:{}".format(ip))
+        print(ip)
         return get_ip_info(ip)
