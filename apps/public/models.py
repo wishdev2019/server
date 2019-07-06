@@ -47,3 +47,24 @@ class Notice(models.Model):
         verbose_name = '公告表'
         verbose_name_plural = verbose_name
         db_table = 'notice'
+
+
+class Ticket(models.Model):
+    id = models.AutoField(primary_key=True)
+    bigtype = models.CharField(verbose_name="彩票大类",max_length=60)
+    type  = models.CharField(verbose_name="彩票小类",max_length=60)
+    createtime = models.BigIntegerField(verbose_name='创建时间')
+    bigno = models.IntegerField(verbose_name="大类排序")
+    no = models.IntegerField(verbose_name="小类排序")
+
+    def save(self, *args, **kwargs):
+        t=time.mktime(timezone.now().timetuple())
+
+        if not self.createtime:
+            self.createtime = t
+        return super(Ticket, self).save(*args, **kwargs)
+
+    class Meta:
+        verbose_name = '彩票信息'
+        verbose_name_plural = verbose_name
+        db_table = 'ticket'

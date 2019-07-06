@@ -6,10 +6,10 @@ from core.decorator.response import Core_connector
 from auth.authentication import Authentication
 
 from apps.user.models import Token
-from apps.public.models import Memu,Notice
+from apps.public.models import Memu,Notice,Ticket
 from django.db.models import Q
 from utils.exceptions import PubErrorCustom
-from apps.public.serializers import MenuModelSerializer,ManageSerializer,NoticeModelSerializer
+from apps.public.serializers import MenuModelSerializer,ManageSerializer,NoticeModelSerializer,TicketModelSerializer
 from apps.user.serializers import UsersSerializer1
 
 from apps.user.models import Users
@@ -22,10 +22,17 @@ class PublicAPIView(viewsets.ViewSet):
 
 
     @list_route(methods=['GET'])
-    @Core_connector(pagination=True)
+    @Core_connector()
     def notice(self,request, *args, **kwargs):
 
         return {"data" : NoticeModelSerializer(Notice.objects.filter().order_by('-createtime')[:10],many=True).data}
+
+
+    @list_route(methods=['GET'])
+    @Core_connector()
+    def ticket(self,request, *args, **kwargs):
+
+        return {"data" : TicketModelSerializer(Ticket.objects.filter().order_by('bigno','no'),many=True).data}
 
     @list_route(methods=['GET'])
     @Core_connector(pagination=True)
