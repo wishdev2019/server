@@ -25,7 +25,7 @@ class PublicAPIView(viewsets.ViewSet):
     @Core_connector(pagination=True)
     def notice(self,request, *args, **kwargs):
 
-        return {"data" : NoticeModelSerializer(Notice.objects.filter().order_by('-createtime')[10],many=True)}
+        return {"data" : NoticeModelSerializer(Notice.objects.filter().order_by('-createtime')[:10],many=True).data}
 
     @list_route(methods=['GET'])
     @Core_connector(pagination=True)
