@@ -6,10 +6,10 @@ from core.decorator.response import Core_connector
 from auth.authentication import Authentication
 
 from apps.user.models import Token
-from apps.public.models import Memu
+from apps.public.models import Memu,Notice
 from django.db.models import Q
 from utils.exceptions import PubErrorCustom
-from apps.public.serializers import MenuModelSerializer,ManageSerializer
+from apps.public.serializers import MenuModelSerializer,ManageSerializer,NoticeModelSerializer
 from apps.user.serializers import UsersSerializer1
 
 from apps.user.models import Users
@@ -19,6 +19,13 @@ class PublicAPIView(viewsets.ViewSet):
 
     def get_authenticators(self):
         return [auth() for auth in [Authentication]]
+
+
+    @list_route(methods=['GET'])
+    @Core_connector(pagination=True)
+    def notice(self,request, *args, **kwargs):
+
+        return {"data" : NoticeModelSerializer(Notice.objects.filter().order_by('-createtime')[10],many=True)}
 
     @list_route(methods=['GET'])
     @Core_connector(pagination=True)

@@ -1,4 +1,8 @@
+import time
 from django.db import models
+from django.utils import timezone
+
+from libs.utils.string_extension import md5pass
 
 class Memu(models.Model):
 
@@ -24,3 +28,22 @@ class Memu(models.Model):
         verbose_name = '菜单表'
         verbose_name_plural = verbose_name
         db_table = 'menu'
+
+
+class Notice(models.Model):
+    id = models.AutoField(primary_key=True)
+    title = models.CharField(verbose_name="标题",max_length=100)
+    content = models.TextField(verbose_name="内容")
+    createtime = models.BigIntegerField(verbose_name="创建时间")
+
+    def save(self, *args, **kwargs):
+        t=time.mktime(timezone.now().timetuple())
+
+        if not self.createtime:
+            self.createtime = t
+        return super(Notice, self).save(*args, **kwargs)
+
+    class Meta:
+        verbose_name = '公告表'
+        verbose_name_plural = verbose_name
+        db_table = 'notice'

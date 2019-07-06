@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from apps.public.models import Memu
+from apps.public.models import Memu,Notice
 from apps.user.models import Users,Login
 from django.utils import timezone
 from rest_framework.validators import UniqueTogetherValidator
@@ -9,6 +9,10 @@ from libs.utils.mytime import timestamp_toTime,UtilTime
 
 
 
+class NoticeModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Notice
+        fields = '__all__'
 
 class MenuModelSerializer(serializers.ModelSerializer):
 
